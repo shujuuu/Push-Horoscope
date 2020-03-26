@@ -4,6 +4,7 @@
   "description": "",
   "main": "hello.js",
   "dependencies": {
+    "googleapis": "^39.2.0",
     "push.js": "^1.0.12"
   },
   "devDependencies": {},
