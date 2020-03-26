@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src='js/push.min.js'></script>
+    <script src='js/serviceWorker.min.js'></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
+
+    <script src='js/hello.js'></script>
+
+    <title>Push Horoscope</title>
+</head>
+
+<body>
+    <button id='timeStampBtn'>Click and store to firebase</button>
+</body>
+<script>
+    //Push notif with Push.js
+    // Push.create('Hello World!');
+    Push.create("Hello world!", {
+        body: "It\'s getting late. Don\'t attempt to whistle.",
+        icon: '/icon.png',
+        timeout: 4000,
+        onClick: function () {
+            //focus on this window
+            window.focus();
+
+            // open a link
+            window.location = "http://shujuuu.com"
+            this.close();
+        }
+    });
+
+
+    //Initialize Firebase
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAp2lEnzrunapjSB5isbHlEgnrzzVEaBv0",
+        authDomain: "push-horoscope.firebaseapp.com",
+        databaseURL: "https://push-horoscope.firebaseio.com",
+        projectId: "push-horoscope",
+        storageBucket: "push-horoscope.appspot.com",
+        messagingSenderId: "383854839481",
+        appId: "1:383854839481:web:831fc9fa402ae3a35abd68",
+        measurementId: "G-JV89STMRMF"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+
+    //Push notif with Firebase
+    let database = firebase.firestore();
+    // let storage = firebase.storage().ref();
+    // let date = new Date();
+    let timeStampBtn = document.getElementById('timeStampBtn');
+    timeStampBtn.addEventListener('click', function () {
+        console.log('timeStampBtn clicked');
+        database.collection('events').add({
+            time: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+        console.log('sent to firebase');
+    })
+</script>
+
+</html>
