@@ -23,19 +23,7 @@
 <script>
     //Push notif with Push.js
     // Push.create('Hello World!');
-    Push.create("Hello world!", {
-        body: "It\'s getting late. Don\'t attempt to whistle.",
-        icon: '/icon.png',
-        timeout: 4000,
-        onClick: function () {
-            //focus on this window
-            window.focus();
 
-            // open a link
-            window.location = "http://shujuuu.com"
-            this.close();
-        }
-    });
 
 
     //Initialize Firebase
@@ -62,6 +50,23 @@
     let timeStampBtn = document.getElementById('timeStampBtn');
     timeStampBtn.addEventListener('click', function () {
         console.log('timeStampBtn clicked');
+
+        //give push notif
+        Push.create("Hello world!", {
+            body: "It\'s getting late. Don\'t attempt to whistle.",
+            icon: '/icon.png',
+            timeout: 4000,
+            onClick: function () {
+                //focus on this window
+                window.focus();
+
+                // open a link
+                window.location = "http://shujuuu.com"
+                this.close();
+            }
+        });
+
+        //push time to firebase
         database.collection('events').add({
             time: firebase.firestore.FieldValue.serverTimestamp(),
         })
