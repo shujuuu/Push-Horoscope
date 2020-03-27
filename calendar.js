@@ -83,13 +83,13 @@ function listEvents(auth) {
     });
     calendar.events.list({
         //get calendar ID from settings and sharings
-        calendarId: 'primary',
-        // calendarId: 'tcf1gmsppbe877cfgvdplmtncs@group.calendar.google.com', //classes
+        // calendarId: 'primary',
+        calendarId: 'tcf1gmsppbe877cfgvdplmtncs@group.calendar.google.com', //classes
         // calendarId: 'dqdua0iel2fhqcq67stkc1b72c@group.calendar.google.com', //fun
         // calendarId: 'sjl779@nyu.edu', //sjl - work
         // calendarId: 'en-gb.taiwan#holiday@group.v.calendar.google.com', //holidays in taiwan
         timeMin: (new Date()).toISOString(),
-        maxResults: 3,
+        maxResults: 10,
         singleEvents: true,
         orderBy: 'startTime',
     }, (err, res) => {

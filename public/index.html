@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
+    <script src='https://apis.google.com/js/api.js' type="text/javascript"></script>
+
+    <script src='/js/push.min.js'></script>
+    <script src='/js/serviceWorker.min.js'></script>
+    <script src='/js/hello.js'></script>
+
+
+    <title>Push Horoscope</title>
+</head>
+
+<body>
+    <button id='timeStampBtn'>Click and store to firebase</button>
+    <img id='original' src="" alt="">
+</body>
+<script>
+    //Push notif with Push.js
+    // Push.create('Hello World!');
+
+    //1st: Get date for today
+    async function getDate() {
+        let date = await new Date();
+        let yyyy = date.getFullYear();
+        let mm = date.getMonth() + 1;
+        let dd = date.getDate();
+        if (mm < 10) {
+            mm = 0 + `${mm}`
+        }
+        if (dd < 10) {
+            dd = 0 + `${dd}`
+        }
+        // let formattedDate = `${yyyy}-${mm}-${dd}`;
+        // console.log(`newD is ${formattedDate}`);
+
+        let formattedDate = {
+            date: `${yyyy}-${mm}-${dd}`
+        }
+
+        console.log(formattedDate);
+        return await formattedDate;
+    }
+
+    getDate()
+        .then(date => { //2nd: Sent to backend
+            const options = {
+                methog: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(date),
+            }
+            fetch('/date', options);
+        })
+        .catch(error => {
+            console.error(error)
+        });
+
+    // async function getImg() {
+    //     //set result of smt
+    //     const res = await fetch('original.jpg');
+    //     const blob = await res.blob();
+    //     document.getElementById("original").src = URL.createObjectURL(blob);
+    // }
+
+
+    // getImg()
+    //     .then(res => {
+    //         console.log('yayyy image loaded!!!')
+    //     }).catch(error => {
+    //         console.log('error!!!')
+    //         console.log(error)
+    //     });
+
+    // fetch('original.jpg').then(res => {
+    //     console.log(res);
+    //     return res.blob();
+    // }).then(blob => {
+    //     console.log(blob)
+    //     document.getElementById("original").src = URL.createObjectURL(blob);
+    // }).catch(error => {
+    //     console.log('error!!!')
+    //     console.log(error)
+    // });
+
+    //Initialize Firebase
+    // Your web app's Firebase configuration
+    // var firebaseConfig = {
+    //     apiKey: "AIzaSyAp2lEnzrunapjSB5isbHlEgnrzzVEaBv0",
+    //     authDomain: "push-horoscope.firebaseapp.com",
+    //     databaseURL: "https://push-horoscope.firebaseio.com",
+    //     projectId: "push-horoscope",
+    //     storageBucket: "push-horoscope.appspot.com",
+    //     messagingSenderId: "383854839481",
+    //     appId: "1:383854839481:web:831fc9fa402ae3a35abd68",
+    //     measurementId: "G-JV89STMRMF"
+    // };
+    // // Initialize Firebase
+    // firebase.initializeApp(firebaseConfig);
+    // firebase.analytics();
+    // let database = firebase.firestore();
+    // // let storage = firebase.storage().ref();
+
+
+    // //Push notif with Firebase
+    // let timeStampBtn = document.getElementById('timeStampBtn');
+    // timeStampBtn.addEventListener('click', function () {
+    //     // console.log('timeStampBtn clicked');
+
+    //     //give push notif
+    //     Push.create("Hello world!", {
+    //         body: "It\'s getting late. Don\'t attempt to whistle.",
+    //         icon: '/icon.png',
+    //         timeout: 4000,
+    //         onClick: function () {
+    //             //focus on this window
+    //             window.focus();
+
+    //             // open a link
+    //             window.location = "http://shujuuu.com"
+    //             this.close();
+    //         }
+    //     });
+
+    //     //push time to firebase
+    //     database.collection('events').add({
+    //         time: `this is a formattedDate from index.html ->> ${formattedDate}`,
+    //         timeStamp: firebase.firestore.FieldValue.serverTimestamp()
+    //     })
+    //     // console.log('sent to firebase');
+    // })
+</script>
+
+</html>
