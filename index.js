@@ -15,5 +15,5 @@ app.use(express.json({
 
 app.post('/date', (req, res) => {
     console.log('i got a request');
-    console.log(req);
+    console.log(req.body);
 })
