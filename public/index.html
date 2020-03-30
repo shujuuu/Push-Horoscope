@@ -10,60 +10,109 @@
     <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
     <script src='https://apis.google.com/js/api.js' type="text/javascript"></script>
-
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
     <script src='/js/push.min.js'></script>
     <script src='/js/serviceWorker.min.js'></script>
     <script src='/js/hello.js'></script>
 
-
     <title>Push Horoscope</title>
 </head>
+<style>
+    * {
+        font-family: 'Crimson Text', serif;
+
+    }
+
+    .txtCenter {
+        text-align: center;
+    }
+</style>
 
 <body>
-    <button id='timeStampBtn'>Click and store to firebase</button>
+    <!-- <button id='timeStampBtn'>Click and store to firebase</button> -->
+    <!-- <button id='loginCalendar'>Login Another Calendar</button> -->
     <img id='original' src="" alt="">
+
+    <!-- <p>Loading your fortune...</p> -->
+    <div id='fortune' class='txtCenter'>
+        <div>
+            <h1>An advice for the day</h1>
+        </div>
+        <div>
+            <p>Appointments:</p>
+        </div>
+        <div>
+            <p>Dos:</p>
+        </div>
+
+        <div>
+            <p>Donts:</p>
+        </div>
+        <div>
+            <p>Performance: </p>
+        </div>
+        <div>
+            <p>Comment:</p>
+        </div>
+    </div>
+
 </body>
 <script>
     //Push notif with Push.js
     // Push.create('Hello World!');
+    // let loginCalendar = document.getElementById('loginCalendar');
+    // loginCalendar.addEventListener('click', function () {
+    //     console.log('login button clicked, send request to backend!');
+    // })
+    //get date
+    // async function getDate() {
+    //     let date = await new Date();
+    //     let yyyy = date.getFullYear();
+    //     let mm = date.getMonth() + 1;
+    //     let dd = date.getDate();
+    //     if (mm < 10) {
+    //         mm = 0 + `${mm}`
+    //     }
+    //     if (dd < 10) {
+    //         dd = 0 + `${dd}`
+    //     }
+    //     // let formattedDate = `${yyyy}-${mm}-${dd}`;
+    //     // console.log(`newD is ${formattedDate}`);
 
-    //1st: Get date for today
-    async function getDate() {
-        let date = await new Date();
-        let yyyy = date.getFullYear();
-        let mm = date.getMonth() + 1;
-        let dd = date.getDate();
-        if (mm < 10) {
-            mm = 0 + `${mm}`
-        }
-        if (dd < 10) {
-            dd = 0 + `${dd}`
-        }
-        // let formattedDate = `${yyyy}-${mm}-${dd}`;
-        // console.log(`newD is ${formattedDate}`);
+    //     let formattedDate = await {
+    //         date: `${yyyy}-${mm}-${dd}`
+    //     }
 
-        let formattedDate = {
-            date: `${yyyy}-${mm}-${dd}`
-        }
+    //     console.log(formattedDate);
 
-        console.log(formattedDate);
-        return await formattedDate;
+    //     //post it to backend
+    //     const options = {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify(formattedDate)
+    //     };
+    //     const response = await fetch('/date', options);
+    //     const json = await response.json();
+    //     console.log(json);
+
+    // }
+
+    // getDate();
+
+
+    async function getFortune() {
+        console.log('getFortune function called');
+        const options = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formattedDate)
+        };
+        const response = await fetch('/list', options);
     }
-
-    getDate()
-        .then(date => { //2nd: Sent to backend
-            const options = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(date),
-            }
-            fetch('/date', options);
-        })
-        .catch(error => {
-            console.error(error)
-        });
 
     // async function getImg() {
     //     //set result of smt
@@ -71,7 +120,6 @@
     //     const blob = await res.blob();
     //     document.getElementById("original").src = URL.createObjectURL(blob);
     // }
-
 
     // getImg()
     //     .then(res => {
