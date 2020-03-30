@@ -13,10 +13,22 @@
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
     <script src='/js/push.min.js'></script>
     <script src='/js/serviceWorker.min.js'></script>
-    <script src='/js/hello.js'></script>
+    <!-- <script src='/js/hello.js'></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+
 
     <title>Push Horoscope</title>
 </head>
+<script>
+    var socket = io.connect('http://localhost');
+    socket.on('connect', function () {
+        console.log("Connected");
+    });
+
+    socket.on('activities', function (list) {
+        console.log(list);
+    });
+</script>
 <style>
     * {
         font-family: 'Crimson Text', serif;
@@ -65,54 +77,30 @@
     //     console.log('login button clicked, send request to backend!');
     // })
     //get date
-    // async function getDate() {
-    //     let date = await new Date();
-    //     let yyyy = date.getFullYear();
-    //     let mm = date.getMonth() + 1;
-    //     let dd = date.getDate();
-    //     if (mm < 10) {
-    //         mm = 0 + `${mm}`
-    //     }
-    //     if (dd < 10) {
-    //         dd = 0 + `${dd}`
-    //     }
-    //     // let formattedDate = `${yyyy}-${mm}-${dd}`;
-    //     // console.log(`newD is ${formattedDate}`);
+    async function getFortune() {
+        const response = await fetch('/');
+        const json = await response.json();
+        console.log(json);
+    }
 
-    //     let formattedDate = await {
-    //         date: `${yyyy}-${mm}-${dd}`
-    //     }
+    fetch('/')
+        .then(res => res.json)
+        .then(list => console.log(list));
 
-    //     console.log(formattedDate);
+    // getFortune();
 
-    //     //post it to backend
+
+    // async function getFortune() {
+    //     console.log('getFortune function called');
     //     const options = {
-    //         method: "POST",
+    //         method: "GET",
     //         headers: {
     //             "Content-Type": "application/json"
     //         },
     //         body: JSON.stringify(formattedDate)
     //     };
-    //     const response = await fetch('/date', options);
-    //     const json = await response.json();
-    //     console.log(json);
-
+    //     const response = await fetch('/list', options);
     // }
-
-    // getDate();
-
-
-    async function getFortune() {
-        console.log('getFortune function called');
-        const options = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formattedDate)
-        };
-        const response = await fetch('/list', options);
-    }
 
     // async function getImg() {
     //     //set result of smt
@@ -128,6 +116,7 @@
     //         console.log('error!!!')
     //         console.log(error)
     //     });
+
 
     // fetch('original.jpg').then(res => {
     //     console.log(res);
